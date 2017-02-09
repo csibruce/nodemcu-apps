@@ -33,7 +33,7 @@ end
 function slack_send(msg)
   local slack_url = 'https://hooks.slack.com/services/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'
   local post_headers= 'Content-Type: application/x-www-form-urlencoded\r\ncache-control: no-cache\r\n'
-  local post_body = 'payload={"username":"bruce-nodeMcu","icon_emoji":":man_with_turban:","text":"*ip is* `'..wifi.sta.getip()..'`"}'
+  local post_body = 'payload={"username":"bruce-nodeMcu","icon_emoji":":man_with_turban::skin-tone-4:","text":"*ip is* `'..wifi.sta.getip()..'`"}'
 
   print(post_headers)
   print(post_body)
