@@ -1,3 +1,3 @@
 -- WiFi Connect information
 SSID = "iptime-fuck"
-PASSWORD = ""
+PASSWORD = "00000"
