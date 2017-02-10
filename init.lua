@@ -1,4 +1,5 @@
 dofile("credentials.lua")
+dofile("slack.lua")
 bluePin = 1
 redPin = 2
 gpio.mode(bluePin,gpio.OUTPUT)
@@ -25,27 +26,9 @@ function startup()
     file.close("init.lua")
     blinkRed()
     blinkBlue()
-    slack_send()
+    slack.send(SLACK_ID)
     dofile("webserver.lua")
   end
-end
-
-function slack_send(msg)
-  local slack_url = 'https://hooks.slack.com/services/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'
-  local post_headers= 'Content-Type: application/x-www-form-urlencoded\r\ncache-control: no-cache\r\n'
-  local post_body = 'payload={"username":"bruce-nodeMcu","icon_emoji":":man_with_turban::skin-tone-4:","text":"*ip is* `'..wifi.sta.getip()..'`"}'
-
-  print(post_headers)
-  print(post_body)
-  http.post(slack_url, post_headers, post_body,
-    function(code, data)
-      if (code < 0) then
-        print("HTTP request failed: code "..code)
-      else
-        print("Slack response: ", code, data)
-      end
-    end
-  )
 end
 
 --init.lua
@@ -59,6 +42,7 @@ wifi.sta.connect()
 tmr.alarm(1, 1000, 1, function()
   if wifi.sta.getip()== nil then
     print("IP unavaiable, Waiting...")
+    print(SLACK_ID)
     blinkRed()
   else
     tmr.stop(1)
